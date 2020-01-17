@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dashboard.html</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="sideBar">
+    
+    Hello, <strong><label id="lblAdminName"></label></strong><br><br>
+
+    <script>
+        currentAdmin = JSON.parse(window.localStorage.getItem("currentAdmin"));
+        document.getElementById("lblAdminName").innerHTML = currentAdmin.name;
+    </script>
+    
+    <br>
+    <input type="button" value="Dashboard" onclick="displayDashBoard()"><br>
+    <input type="button" value="Users" onclick="displayUsers()"><br>
+    <input type="button" value="Login Session" onclick="displayLoginSession()"><br>
+    <input type="button" value="Logout" onclick="logoutAdmin()"><br>
+
+</div>
+
+<div id="contentBar">
+    <h2>Dashboard</h2>
+    <div class="under18">
+        User < 18 years
+        <br>
+        <label id="count18"></label> Users
+        <script>
+            counter = 0;
+            allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            for(i=0; i<allUsersToDisplay.length; i++){
+                if(parseInt(allUsersToDisplay[i].age) < 18){
+                    counter++;
+                }
+            }
+            document.getElementById("count18").innerHTML = counter;
+        </script>
+    </div>
+    <div class="under50">
+        18 - 50 years
+        <br>
+        <label id="count50"></label> Users
+        <script>
+            counter = 0;
+            allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            for(i=0; i<allUsersToDisplay.length; i++){
+                if(parseInt(allUsersToDisplay[i].age) > 18 && parseInt(allUsersToDisplay[i].age) < 50){
+                    counter++;
+                }
+            }
+            document.getElementById("count50").innerHTML = counter;
+        </script>
+    </div>
+    <div class="over50">
+        Users > 50 years
+        <br>
+        <label id="countOver50"></label> Users
+        <script>
+            counter = 0;
+            allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            for(i=0; i<allUsersToDisplay.length; i++){
+                if(parseInt(allUsersToDisplay[i].age) > 50){
+                    counter++;
+                }
+            }
+            document.getElementById("countOver50").innerHTML = counter;
+        </script>
+    </div>
+</div>
+
+<center>
+    <label id="birthdayMessage"></label> Users
+        <script>
+            allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            today = new Date();
+            for(i=0; i<allUsersToDisplay.length; i++){
+                if(allUsersToDisplay[i].dob == today){
+                    document.getElementById("birthdayMessage").innerHTML = "Happy Birthday, "+allUsersToDisplay[i].name;
+                }
+            }
+            
+        </script>
+</center>
+
+
+<script src="javascriptTest.js"></script>
+</body>
+</html>

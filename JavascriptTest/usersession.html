@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>usersession.html</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="sideBar">
+    
+    Hello, <strong><label id="lblAdminName"></label></strong><br><br>
+
+    <script>
+        currentAdmin = JSON.parse(window.localStorage.getItem("currentAdmin"));
+        document.getElementById("lblAdminName").innerHTML = currentAdmin.name;
+    </script>
+    
+    <br>
+    <input type="button" value="Dashboard" onclick="displayDashBoard()"><br>
+    <input type="button" value="Users" onclick="displayUsers()"><br>
+    <input type="button" value="Login Session" onclick="displayLoginSession()"><br>
+    <input type="button" value="Logout" onclick="logoutAdmin()"><br>
+
+</div>
+
+<div id="contentBar">
+    
+        <h2>User Session Logs</h2>
+        <table id="myTable" border="1">
+            <tr>
+                <th>Name</th>
+                <th>Login Date Time</th>
+                <th>Logout Date Time</th>
+            </tr>
+        </table>
+</div>
+
+<script>
+    if(window.localStorage.getItem("LoggedUsers")==null){
+        allUsers = [];
+        window.localStorage.setItem("LoggedUsers", JSON.stringify(allUsers));
+    }
+
+    function displayAllUsers(){
+        allUsersToDisplay = JSON.parse(window.localStorage.getItem("LoggedUsers"));
+        for(i=0; i<allUsersToDisplay.length; i++){
+
+            var table = document.getElementById("myTable");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            cell1.innerHTML = allUsersToDisplay[i].email;
+            cell2.innerHTML = allUsersToDisplay[i].loggedInTime;
+            cell3.innerHTML = allUsersToDisplay[i].loggedOutTime; 
+        }
+    }
+    displayAllUsers();
+</script>
+<script src="javascriptTest.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login.html</title>
+</head>
+<body>
+<center>
+<form action="#">
+<table>
+    <caption>LOGIN</caption>
+    <tr>
+        <td><input type="text" id="txtEmailLogin" placeholder="Email" required></td>
+    </tr>
+    <tr>
+        <td><input type="password" id="txtPasswordLogin" placeholder="Password" required></td>
+    </tr>
+    <tr>
+        <td><input type="button" onclick="return login()" value="LOGIN"></td>
+    </tr>
+    <tr id="orRow">
+        <td><center>OR</center></td>
+    </tr>
+    <tr>
+        <td><input type="button" id="btnRegisterAdmin" onclick="registerNow()" value="REGISTER NOW"></td>
+    </tr>
+</table>
+</form>
+</center>
+<script>
+    if(JSON.parse(window.localStorage.getItem("currentAdmin"))!=null){
+        document.getElementById("btnRegisterAdmin").style.visibility = "hidden";
+        document.getElementById("orRow").style.visibility = "hidden";
+    }
+</script>
+<script src="javascriptTest.js"></script>
+</body>
+</html>

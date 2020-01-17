@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dashboard.html</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="sideBar">
+    
+    Hello, <strong><label id="lblUserName"></label></strong><br><br>
+
+    <script>
+        currentUser = window.sessionStorage.getItem("currentUser");
+        document.getElementById("lblUserName").innerHTML = currentUser;
+    </script>
+    
+    <br>
+    <input type="button" value="Dashboard" onclick="displayDashBoard()"><br>
+    <input type="button" value="Logout" onclick="logoutUser()"><br>
+
+</div>
+
+<div id="contentBar">
+</div>
+
+
+<script>
+    if(window.localStorage.getItem("LoggedUsers")==null){
+        loggedUsers=[];
+        window.localStorage.setItem("LoggedUsers", loggedUsers);
+    }
+</script>
+<script src="javascriptTest.js"></script>
+</body>
+</html>
