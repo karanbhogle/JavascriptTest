@@ -49,6 +49,7 @@
         <script>
             counter = 0;
             allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            window.sessionStorage.setItem("userCount",allUsersToDisplay.length);
             for(i=0; i<allUsersToDisplay.length; i++){
                 if(parseInt(allUsersToDisplay[i].age) > 18 && parseInt(allUsersToDisplay[i].age) < 50){
                     counter++;
@@ -75,13 +76,18 @@
 </div>
 
 <center>
-    <label id="birthdayMessage"></label> Users
+    <br><br><br><br><label id="birthdayMessage"></label>
         <script>
             allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
-            today = new Date();
+            thisMonth = new Date().getMonth();
+            thisDate = new Date().getDate();
+
             for(i=0; i<allUsersToDisplay.length; i++){
-                if(allUsersToDisplay[i].dob == today){
-                    document.getElementById("birthdayMessage").innerHTML = "Happy Birthday, "+allUsersToDisplay[i].name;
+                userDate = new Date(allUsersToDisplay[i].dob).getDate();
+                userMonth = new Date(allUsersToDisplay[i].dob).getMonth();
+
+                if(thisMonth == userMonth && thisDate == userDate){
+                    document.getElementById("birthdayMessage").innerHTML += "<br>Happy Birthday, "+allUsersToDisplay[i].name;
                 }
             }
             

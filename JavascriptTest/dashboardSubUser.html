@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dashboard.html</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="sideBar">
+    
+        Hello, <strong><label id="lblUserName"></label></strong><br><br>
+    
+        <script>
+            currentUser = window.sessionStorage.getItem("currentUser");
+            document.getElementById("lblUserName").innerHTML = currentUser;
+        </script>
+        
+        <br>
+        <input type="button" value="Dashboard" onclick="displaySubUserDashBoard()"><br>
+        <input type="button" value="Logout" onclick="logoutUser()"><br>
+    
+    </div>
+
+<div id="contentBar">
+    
+</div>
+
+<center>
+    <br><br><br><br>
+    <img src='hbd.jpg' id='birthdayimage' style="display: none;" height='200'><br>
+    <label id="birthdayMessage"></label>
+        <script>
+            allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+            thisMonth = new Date().getMonth();
+            thisDate = new Date().getDate();
+
+            for(i=0; i<allUsersToDisplay.length; i++){
+                
+                currentUser = window.sessionStorage.getItem("currentUser");
+                if(currentUser == allUsersToDisplay[i].email){
+                    userDate = new Date(allUsersToDisplay[i].dob).getDate();
+                    userMonth = new Date(allUsersToDisplay[i].dob).getMonth();
+
+                    if(thisMonth == userMonth && thisDate == userDate){
+                        document.getElementById('birthdayimage').style.display = "block";
+                        document.getElementById("birthdayMessage").innerHTML = "Happy Birthday, "+allUsersToDisplay[i].name;
+                    }
+                }
+            }
+            
+        </script>
+</center>
+
+
+<script src="javascriptTest.js"></script>
+</body>
+</html>

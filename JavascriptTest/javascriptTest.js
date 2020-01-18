@@ -173,6 +173,10 @@ function displayDashBoard(){
     window.location.replace("dashboard.html");
 }
 
+function displaySubUserDashBoard(){
+    window.location.replace("dashboardSubUser.html");
+}
+
 function displayUsers(){
     window.location.replace("users.html");
 }
@@ -201,7 +205,10 @@ function addUser(){
     userPassword = document.getElementById("newUserPassword").value;
     userDOB = document.getElementById("newUserDOB").value;
 
-    User = function(name, email, password, dob){
+    totalUsers = window.sessionStorage.getItem("userCount");
+    
+    User = function(id, name, email, password, dob){
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = parseInt(password);
@@ -209,7 +216,7 @@ function addUser(){
         this.age = ~~((Date.now() - this.dob) / (31557600000)) + " years old";
     }
 
-    user = new User(userName, userEmail, userPassword, userDOB);
+    user = new User(totalUsers, userName, userEmail, userPassword, userDOB);
     
     allUsers = JSON.parse(window.localStorage.getItem("Users"));
     allUsers.push(user);
@@ -218,6 +225,43 @@ function addUser(){
 }
 
 
+var userId;
+function editUserData(id){
+    userId = parseInt(id);
+    user = JSON.parse(window.localStorage.getItem("Users"));
+
+    document.getElementById("update").style.display="block";
+    document.getElementById("add").style.display="none";
+    document.getElementById("newUserName").value = user[userId].name;
+    document.getElementById("newUserEmail").value = user[userId].email;
+    document.getElementById("newUserPassword").value = user[userId].password;
+    document.getElementById("newUserDOB").value = user[userId].dob;
+    
+}
+
+function updateUser(){
+    alert(userId);
+    user = JSON.parse(window.localStorage.getItem("Users"));
+    user[userId].name = document.getElementById("newUserName").value;
+    user[userId].email = document.getElementById("newUserEmail").value;
+    user[userId].password = document.getElementById("newUserPassword").value;
+    user[userId].dob = new Date(document.getElementById("newUserDOB").value);
+    window.localStorage.setItem("Users", JSON.stringify(user));
+
+    document.getElementById("newUserName").value = "";
+    document.getElementById("newUserEmail").value = "";
+    document.getElementById("newUserPassword").value = "";
+    document.getElementById("newUserDOB").value = "";
+    window.location.reload();
+}
+
+function deleteUserData(id){
+    userId = parseInt(id);
+    user = JSON.parse(window.localStorage.getItem("Users"));
+    user.splice(id,1);
+    window.localStorage.setItem("Users", JSON.stringify(user));
+    window.location.reload();
+}
 
 
 

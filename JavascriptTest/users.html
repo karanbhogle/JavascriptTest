@@ -32,7 +32,8 @@
         <input type="text" id="newUserEmail" placeholder="Email">
         <input type="text" id="newUserPassword" placeholder="Password">
         <input type="date" id="newUserDOB" placeholder="Birthdate">
-        <input type="button" value="Add User" onclick="addUser()">
+        <input type="button" id="add" value="Add User" onclick="return addUser()">
+        <input type="button" id="update" value="Update User" style="display: none;" onclick="return updateUser()">
         <br><br><br><br>
 
         <h2>User List</h2>
@@ -56,8 +57,14 @@
 
     function displayAllUsers(){
         allUsersToDisplay = JSON.parse(window.localStorage.getItem("Users"));
+        if(allUsersToDisplay == null){
+            window.sessionStorage.setItem("userCount",1);    
+        }
+        window.sessionStorage.setItem("userCount",allUsersToDisplay.length);
         for(i=0; i<allUsersToDisplay.length; i++){
-
+            if(allUsersToDisplay == null){
+                window.sessionStorage.setItem("userCount",allUsersToDisplay[i].id);    
+            }
             var table = document.getElementById("myTable");
             var row = table.insertRow();
             var cell1 = row.insertCell(0);
@@ -71,11 +78,16 @@
             cell2.innerHTML = allUsersToDisplay[i].email;
             cell3.innerHTML = allUsersToDisplay[i].password;
             cell4.innerHTML = allUsersToDisplay[i].dob;
-            cell5.innerHTML = allUsersToDisplay[i].age;
-            cell6.innerHTML = "<input type='button' value='Edit'><input type='button' value='Delete'>";    
+            age = calculateAge(new Date(allUsersToDisplay[i].dob));
+            allUsersToDisplay[i].age = age;
+            cell5.innerHTML = age;
+            cell6.innerHTML = "<input type='button' id='btnEdit' onclick='editUserData("+allUsersToDisplay[i].id+")' value='Edit'><input type='button' id='btnDelete' onclick='deleteUserData("+allUsersToDisplay[i].id+")' value='Delete'>";    
         }
     }
     displayAllUsers();
+    function calculateAge(dob){
+    return ~~((Date.now() - dob) / (31557600000)) + " years old";;
+}
 </script>
 <script src="javascriptTest.js"></script>
 </body>
